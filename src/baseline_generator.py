@@ -34,6 +34,14 @@ times = []
 text_lens = []
 audio_lens = []
 
+# def setup():
+    # iterate through list of available models and fill dict (like get all models from EncDecCTCModelBPE and so on ...)
+    # for model_name in model_names:
+    #     model_name_to_model[model_name] =
+    #         "quartznet": nemo_asr.models.EncDecCTCModel.from_pretrained(model_name=),
+    #         "citrinet": nemo_asr.models.EncDecCTCModelBPE.from_pretrained(model_name=)
+    #     }
+
 def timeit(func):
     @wraps(func)
     def timeit_wrapper(*args, **kwargs):
@@ -82,6 +90,7 @@ def make_benchmarks():
 
 
 def generate_baseline():
+    # setup()
     make_benchmarks()
 
     benchmarks = {
