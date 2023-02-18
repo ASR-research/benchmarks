@@ -18,6 +18,8 @@ from pathlib import Path
 
 from flac_duration import get_flac_duration
 
+from jiwer import wer
+
 model_name_to_model = {
     "quartznet": nemo_asr.models.EncDecCTCModel.from_pretrained(model_name="QuartzNet15x5Base-En"),
     "citrinet": nemo_asr.models.EncDecCTCModelBPE.from_pretrained(model_name="stt_en_citrinet_256")
@@ -45,7 +47,9 @@ def timeit(func):
 
 @timeit
 def inference(model, files):
-    return model.transcribe(paths2audio_files=files)
+    recognized_texts = model.transcribe(paths2audio_files=files)
+    assert len(recognized_texts) == 1, "False transcribe assumption!"
+    return recognized_texts[0]
 
 def make_benchmarks():
     for model_name in model_name_to_model.keys():
@@ -66,10 +70,10 @@ def make_benchmarks():
                 audio = audios[0]
                 print(pronounced_text, audio)
                 for attempt in range(5):
-                    inference(model, [audio.as_posix()])
+                    recognized_text = inference(model, [audio.as_posix()])
                     models.append(model_name)
                     nums_cores.append("?")
-                    WERs.append("?")
+                    WERs.append(wer(pronounced_text.lower(), recognized_text.lower()))
                     sample_ids.append(audio.stem)
                     engines.append("NeMo")
                     run_ids.append(f"{audio.stem}-{attempt + 1}")
