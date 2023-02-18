@@ -16,6 +16,8 @@ from definitions import ROOT_DIR
 import os
 from pathlib import Path
 
+from flac_duration import get_flac_duration
+
 model_name_to_model = {
     "quartznet": nemo_asr.models.EncDecCTCModel.from_pretrained(model_name="QuartzNet15x5Base-En"),
     "citrinet": nemo_asr.models.EncDecCTCModelBPE.from_pretrained(model_name="stt_en_citrinet_256")
@@ -72,7 +74,7 @@ def make_benchmarks():
                     engines.append("NeMo")
                     run_ids.append(f"{audio.stem}-{attempt + 1}")
                     text_lens.append(len(pronounced_text))
-                    audio_lens.append("?")
+                    audio_lens.append(get_flac_duration(audio))
 
 
 def generate_baseline():
