@@ -76,7 +76,7 @@ def make_benchmarks():
                     WERs.append(wer(pronounced_text.lower(), recognized_text.lower()))
                     sample_ids.append(audio.stem)
                     engines.append("NeMo")
-                    run_ids.append(f"{audio.stem}-{attempt + 1}")
+                    run_ids.append(attempt + 1)
                     text_lens.append(len(pronounced_text))
                     audio_lens.append(get_flac_duration(audio))
 
