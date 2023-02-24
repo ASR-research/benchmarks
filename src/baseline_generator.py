@@ -9,9 +9,9 @@ import time
 
 import numpy as np
 import pandas as pd
+import json
 
 from definitions import ROOT_DIR
-import os
 from pathlib import Path
 
 from flac_duration import get_flac_duration
@@ -33,12 +33,12 @@ text_lens = []
 audio_lens = []
 
 def setup():
+    models_path = Path(ROOT_DIR) / "data" / "models"
+    for path in models_path.glob("*.json"):
+        with open(path.as_posix()) as f:
     # iterate through list of available models and fill dict (like get all models from EncDecCTCModelBPE and so on ...)
-    for model_name in model_names:
-        model_name_to_model[model_name] = {
-            # "quartznet": nemo_asr.models.EncDecCTCModel.from_pretrained(model_name=),
-            # "citrinet": nemo_asr.models.EncDecCTCModelBPE.from_pretrained(model_name=)
-        }
+            for model_name in json.load(f)["model_names"]:
+                model_name_to_model[model_name] = nemo_asr.models.EncDecCTCModel.from_pretrained(model_name="QuartzNet15x5Base-En")
 
 def timeit(func):
     @wraps(func)
