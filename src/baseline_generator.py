@@ -1,4 +1,6 @@
 # NeMo's "core" package
+import sys
+
 import nemo
 # NeMo's ASR collection - this collections contains complete ASR models and
 # building blocks (modules) for ASR
@@ -18,10 +20,7 @@ from flac_duration import get_flac_duration
 
 from jiwer import wer
 
-model_name_to_model = {
-    "quartznet": nemo_asr.models.EncDecCTCModel.from_pretrained(model_name="QuartzNet15x5Base-En"),
-    "citrinet": nemo_asr.models.EncDecCTCModelBPE.from_pretrained(model_name="stt_en_citrinet_256")
-}
+model_name_to_model = dict()
 models = []
 nums_cores = []
 WERs = []
@@ -32,13 +31,17 @@ times = []
 text_lens = []
 audio_lens = []
 
+
 def setup():
-    models_path = Path(ROOT_DIR) / "data" / "models"
-    for path in models_path.glob("*.json"):
-        with open(path.as_posix()) as f:
-    # iterate through list of available models and fill dict (like get all models from EncDecCTCModelBPE and so on ...)
-            for model_name in json.load(f)["model_names"]:
-                model_name_to_model[model_name] = nemo_asr.models.EncDecCTCModel.from_pretrained(model_name="QuartzNet15x5Base-En")
+    NUMBER_MODELS = 1
+    models_path = Path(ROOT_DIR) / "data" / "models.json"
+    with open(models_path.as_posix()) as f:
+        for model_info in json.load(f)["models"]:
+            for model_class_name, model_names in model_info.items():
+                model_class = getattr(sys.modules[nemo_asr.models.__name__], model_class_name)
+                for model_name in model_names[:NUMBER_MODELS]:
+                    model_name_to_model[model_name] = model_class.from_pretrained(model_name=model_name)
+
 
 def timeit(func):
     @wraps(func)
@@ -84,7 +87,7 @@ def make_benchmarks():
                     engines.append("NeMo")
                     run_ids.append(attempt + 1)
                     text_lens.append(len(pronounced_text))
-                    audio_lens.append(get_flac_duration(audio))
+                    audio_lens.append(get_flac_duration(audio.as_posix()))
 
 
 def generate_baseline():
