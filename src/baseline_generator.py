@@ -33,7 +33,7 @@ audio_lens = []
 
 
 def setup():
-    NUMBER_MODELS = 1
+    NUMBER_MODELS = 2
     models_path = Path(ROOT_DIR) / "data" / "models.json"
     with open(models_path.as_posix()) as f:
         for model_info in json.load(f)["models"]:
