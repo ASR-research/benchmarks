@@ -10,8 +10,6 @@ import time
 import numpy as np
 import pandas as pd
 
-import sys
-sys.path.append('../')
 from definitions import ROOT_DIR
 import os
 from pathlib import Path

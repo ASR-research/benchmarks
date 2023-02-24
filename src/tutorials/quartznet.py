@@ -6,9 +6,8 @@ import nemo.collections.asr as nemo_asr
 from definitions import ROOT_DIR
 
 with open(f'{ROOT_DIR}/data/models/models-quartznet-like.txt', 'w') as f:
-  f.write(str(nemo_asr.models.EncDecCTCModel.list_available_models()))
-  # for model in nemo_asr.models.EncDecCTCModel.list_available_models():
-  #   f.write(f'{model["pretrained_model_name"]}\n')
+  for model in nemo_asr.models.EncDecCTCModel.list_available_models():
+    f.write(f'{model.pretrained_model_name}\n')
 
 # This line will download pre-trained QuartzNet15x5 model from NVIDIA's NGC cloud and instantiate it for you
 quartznet = nemo_asr.models.EncDecCTCModel.from_pretrained(model_name="QuartzNet15x5Base-En")
