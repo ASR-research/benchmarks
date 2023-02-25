@@ -11,4 +11,4 @@ citrinet = nemo_asr.models.EncDecCTCModelBPE.from_pretrained(model_name="stt_en_
 
 files = [f'{ROOT_DIR}/data/LibriSpeech/sample.flac']
 for fname, transcription in zip(files, citrinet.transcribe(paths2audio_files=files)):
-  print(f"Audio in {fname} was recognized as: {transcription}")
+    print(f"Audio in {fname} was recognized as: {transcription}")

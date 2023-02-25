@@ -54,11 +54,13 @@ def timeit(func):
         return result
     return timeit_wrapper
 
+
 @timeit
 def inference(model, files):
     recognized_texts = model.transcribe(paths2audio_files=files)
     assert len(recognized_texts) == 1, "False transcribe assumption!"
     return recognized_texts[0]
+
 
 def make_benchmarks():
     for model_name in model_name_to_model.keys():
@@ -105,7 +107,7 @@ def generate_baseline():
         "text_len": text_lens,
         "audio_len": audio_lens,
     }
-    columns = benchmarks.keys()
+    columns = list(benchmarks.keys())
     data = np.array([benchmarks[key] for key in columns]).T
 
     df = pd.DataFrame(columns=columns, data=data)

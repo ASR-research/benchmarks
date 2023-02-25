@@ -1,5 +1,6 @@
 import struct
 
+
 def bytes_to_int(bytes: list) -> int:
         result = 0
         for byte in bytes:

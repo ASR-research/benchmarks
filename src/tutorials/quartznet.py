@@ -11,4 +11,4 @@ quartznet = nemo_asr.models.EncDecCTCModel.from_pretrained(model_name="QuartzNet
 
 files = [f'{ROOT_DIR}/data/LibriSpeech/sample.flac']
 for fname, transcription in zip(files, quartznet.transcribe(paths2audio_files=files)):
-  print(f"Audio in {fname} was recognized as: {transcription}")
+    print(f"Audio in {fname} was recognized as: {transcription}")
