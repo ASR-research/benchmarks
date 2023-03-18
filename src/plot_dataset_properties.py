@@ -20,7 +20,7 @@ def plot_audio_text_correlation():
     text_len = "text_len"
     audio_len = "audio_len"
     df.columns = [text_len, audio_len]
-    fig = px.scatter(df, x=audio_len, y=text_len, trendline='ols')
+    fig = px.scatter(df, x=audio_len, y=text_len, trendline='ols', opacity=0.5, trendline_color_override="red")
     fig.write_image(Path(ROOT_DIR) / "artifacts" / "dataset_audio_len_to_text_len.png")
 
 
