@@ -4,18 +4,7 @@
             "EncDecCTCModel": [
                 "QuartzNet15x5Base-En",
                 "stt_en_quartznet15x5",
-                "stt_en_jasper10x5dr",
-                "stt_ca_quartznet15x5",
-                "stt_it_quartznet15x5",
-                "stt_fr_quartznet15x5",
-                "stt_es_quartznet15x5",
-                "stt_de_quartznet15x5",
-                "stt_pl_quartznet15x5",
-                "stt_ru_quartznet15x5",
-                "stt_zh_citrinet_512",
-                "stt_zh_citrinet_1024_gamma_0_25",
-                "stt_zh_citrinet_1024_gamma_0_25",
-                "asr_talknet_aligner"
+                "stt_en_jasper10x5dr"
             ]
         },
         {
@@ -26,11 +15,6 @@
                 "stt_en_citrinet_256_gamma_0_25",
                 "stt_en_citrinet_512_gamma_0_25",
                 "stt_en_citrinet_1024_gamma_0_25",
-                "stt_es_citrinet_512",
-                "stt_de_citrinet_1024",
-                "stt_fr_citrinet_1024_gamma_0_25",
-                "stt_fr_no_hyphen_citrinet_1024_gamma_0_25",
-                "stt_es_citrinet_1024_gamma_0_25",
                 "stt_en_conformer_ctc_small",
                 "stt_en_conformer_ctc_medium",
                 "stt_en_conformer_ctc_large",
@@ -43,22 +27,7 @@
                 "stt_en_squeezeformer_ctc_large_ls",
                 "stt_en_conformer_ctc_small_ls",
                 "stt_en_conformer_ctc_medium_ls",
-                "stt_en_conformer_ctc_large_ls",
-                "stt_fr_conformer_ctc_large",
-                "stt_fr_no_hyphen_conformer_ctc_large",
-                "stt_de_conformer_ctc_large",
-                "stt_es_conformer_ctc_large",
-                "stt_hi_conformer_ctc_medium",
-                "stt_mr_conformer_ctc_medium",
-                "stt_enes_conformer_ctc_large",
-                "stt_ca_conformer_ctc_large",
-                "stt_rw_conformer_ctc_large",
-                "stt_enes_conformer_ctc_large_codesw",
-                "stt_be_conformer_ctc_large",
-                "stt_hr_conformer_ctc_large",
-                "stt_it_conformer_ctc_large",
-                "stt_ru_conformer_ctc_large",
-                "stt_eo_conformer_ctc_large"
+                "stt_en_conformer_ctc_large_ls"
             ]
         }
     ]
