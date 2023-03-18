@@ -31,15 +31,15 @@ text_lens = []
 audio_lens = []
 
 
-def add_row(model_name, num_cores, pronounced_text, recognized_text, audio, engine, attempt):
+def add_row(model_name, num_cores, pronounced_text, recognized_text, path_to_audio, engine, attempt):
     models.append(model_name)
     nums_cores.append(num_cores)
     WERs.append(wer(pronounced_text.lower(), recognized_text.lower()))
-    sample_ids.append(audio.stem)
+    sample_ids.append(path_to_audio.stem)
     engines.append(engine)
     run_ids.append(attempt + 1)
     text_lens.append(len(pronounced_text))
-    audio_lens.append(get_flac_duration(audio.as_posix()))
+    audio_lens.append(get_flac_duration(path_to_audio.as_posix()))
 
 
 def setup():
@@ -72,12 +72,12 @@ def inference(model, files):
 
 
 def make_benchmarks():
-    for pronounced_text, audio in read_dataset("dev-other"):
+    for pronounced_text, path_to_audio in read_dataset("dev-other"):
         for model_name in model_name_to_model.keys():
             model = model_name_to_model[model_name]
             for attempt in range(SETTINGS["number_attempts"]):
-                recognized_text = inference(model, [audio.as_posix()])
-                add_row(model_name, "?", pronounced_text, recognized_text, audio, "NeMo", attempt)
+                recognized_text = inference(model, [path_to_audio.as_posix()])
+                add_row(model_name, "?", pronounced_text, recognized_text, path_to_audio, "NeMo", attempt)
 
 
 def generate_baseline():
