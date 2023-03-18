@@ -10,17 +10,14 @@ import time
 import numpy as np
 import pandas as pd
 import json
-import logging
 import random
 from pathlib import Path
 
 from definitions import ROOT_DIR, SETTINGS
 
 from src.tools.flac_duration import get_flac_duration
+from src.tools.read_dataset import read_dataset
 from jiwer import wer
-
-
-logging.basicConfig(filename=f'{ROOT_DIR}/artifacts/logs/nemo_{random.randint(0, int(1e9))}.log', level=logging.DEBUG)
 
 model_name_to_model = dict()
 models = []
@@ -75,32 +72,12 @@ def inference(model, files):
 
 
 def make_benchmarks():
-    for model_name in model_name_to_model.keys():
-        model = model_name_to_model[model_name]
-        path = Path(ROOT_DIR) / "data" / "LibriSpeech" / "dev-other"
-        reader_ids = list(path.iterdir())
-        for i, reader_id in enumerate(reader_ids):
-            logging.info(f"reader_id number {i + 1} from {len(reader_ids)}")
-            chapter_ids = list(reader_id.iterdir())
-            for j, chapter_id in enumerate(chapter_ids):
-                logging.info(f"\tchapter_id number {j + 1} from {len(chapter_ids)}")
-        # reader_id = list(path.glob("116"))[0]
-        # chapter_id = list(reader_id.glob("288045"))[0]
-                texts = list(chapter_id.glob("*.txt"))
-                assert len(texts) == 1, "False text assumption!"
-                text = texts[0]
-                with open(text) as f:
-                    lines = list(f.readlines())
-                    for k, line in enumerate(lines):
-                        logging.info(f"\t\taudio number {k + 1} from {len(lines)}")
-                        audio_filename, pronounced_text = line.split(' ', 1)
-                        audios = list(chapter_id.glob(f'{audio_filename}.flac'))
-                        assert len(audios) == 1, "False audio assumption!"
-                        audio = audios[0]
-                        print(pronounced_text, audio)
-                        for attempt in range(SETTINGS["number_attempts"]):
-                            recognized_text = inference(model, [audio.as_posix()])
-                            add_row(model_name, "?", pronounced_text, recognized_text, audio, "NeMo", attempt)
+    for pronounced_text, audio in read_dataset("dev-other"):
+        for model_name in model_name_to_model.keys():
+            model = model_name_to_model[model_name]
+            for attempt in range(SETTINGS["number_attempts"]):
+                recognized_text = inference(model, [audio.as_posix()])
+                add_row(model_name, "?", pronounced_text, recognized_text, audio, "NeMo", attempt)
 
 
 def generate_baseline():
