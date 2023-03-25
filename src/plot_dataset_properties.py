@@ -21,7 +21,11 @@ def plot_audio_text_correlation():
     audio_len = "audio_len"
     df.columns = [text_len, audio_len]
     fig = px.scatter(df, x=audio_len, y=text_len, trendline='ols', opacity=0.5, trendline_color_override="red")
+    fig2 = px.histogram(df, x=audio_len, y=text_len, marginal="box")
+    fig3 = px.histogram(df, x=text_len, y=audio_len, marginal="box")
     fig.write_image(Path(ROOT_DIR) / "artifacts" / "dataset_audio_len_to_text_len.png")
+    fig2.write_image(Path(ROOT_DIR) / "artifacts" / "dataset_text_distribution_related_to_audio.png")
+    fig3.write_image(Path(ROOT_DIR) / "artifacts" / "dataset_audio_distribution_related_to_text.png")
 
 
 if __name__ == "__main__":
